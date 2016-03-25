@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html" />
+	<meta name="author" content="minamoto" />
+	
+	<title>Device</title>
+	<script src="Device.class.js"></script>
+	<script>
+window.onload = function(e){
+	//var obj = Device.show("Mozilla/5.0 (Linux; U; Android 4.3; zh-cn; SM-N9008V Build/JSS15J) AppleWebKit/533.1 (KHTML, like Gecko)Version/4.0 MQQBrowser/5.4 TBS/025489 Mobile Safari/533.1 MicroMessenger/6.3.9.48_refecd3e.700 NetType/WIFI Language/zh_CN");
+	var obj = Device.show();
+	var str = "<ul>";
+	for(var k in obj){
+		str += "<li>";
+		str += k + " : ";
+		str += obj[k][2];
+		if(obj[k][3]) str += obj[k][3];
+		str += "</li>";
+	}
+	str += "</ul>";
+	document.getElementById("message").innerHTML = str;	
+}
+
+	</script>
+</head>
+ 
+<body>
+	<div id="message">
+		
+	</div> 
+
+</body>
+ 
+</html>
