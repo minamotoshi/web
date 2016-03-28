@@ -17,9 +17,19 @@ var Device = {
 		return params;
 	},
 	/**
+	 *	是否android设备
+	 */
+	isAndroid : function(){
+		var pattern = /Android/i;
+		var flag = pattern.test(navigator.userAgent);
+		return flag;
+	},
+	/**
 	 *	是否ios设备
 	 */
 	isIos : function(){
-		return true;
+		var pattern = /ip(?=od|ad|hone)/i;
+		var flag = pattern.test(navigator.userAgent);
+		return flag;
 	}
 };
