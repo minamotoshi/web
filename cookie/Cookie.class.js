@@ -1,5 +1,5 @@
 var Cookie = {
-	_prefix : "coustom_",
+	_prefix : "custom_",
 	/**
 	 *	设置前缀
 	 *	@param	prefix	前缀

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>自定义全景</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				margin: 0px;
+				overflow: hidden;
+			}
+			#loading {
+				position: absolute;
+				top: 0px; width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family:Monospace;
+				font-size:13px;
+				font-weight: bold;
+				text-align:center;
+				font-size: 50pt;
+			}
+		</style>
+		<script src="js/three.min.js"></script>
+		<script src="js/Device.class.js"></script>
+		<script src="js/preloadjs-0.6.2.min.js"></script>
+		<script src="js/Panorama.class.js"></script>
+		<script>
+/**
+ *	使用加载
+ */
+window.onload = function(e){	
+	Panorama.Preload.init();
+	Panorama.Preload.load(progress, complete);
+}
+function progress(e){
+	var per = Math.floor(e.loaded * 10000) /100;
+	document.getElementById("loading").innerHTML = per + "%";
+}
+function complete(e){
+	document.body.removeChild(document.getElementById("loading"));
+	panoInit0();
+}
+function panoInit0(){
+	var pano = new Panorama.main(document.getElementById("container0"), 400,300);
+	pano.setView(Panorama.Preload.getResult("xima"));
+	pano.control(Panorama.kType.DRAG);
+}
+		</script>
+	</head>
+	<body>
+		<div id="loading"></div>
+		<div id="container0"></div>
+		<div id="container1"></div>
+		<div id="info">
+			<p>var pano = new Panorama.main(承载元素，宽，高，宽高缺省值为整个页面大小);</p>
+			<p>pano.setView(图片);</p>
+			<p>pano.control(控制类型，Panorama.kType.DRAG：拖动，Panorama.kType.GRAVITY：重力);</p>
+		</div>
+		<script>
+/**
+ *	直接用图片
+ */
+panoInit1();
+function panoInit1(){
+	var pano = new Panorama.main(document.getElementById("container1"), 300,300);
+	var img = new Image();
+	img.src = "images/stadium.jpg";
+	pano.setView(img);
+	pano.control(Panorama.kType.DRAG, 30);
+}
+		</script>
+	</body>
+</html>
