@@ -1,0 +1,106 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<title>walk</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script src="js/lib/jquery-1.9.1.min.js"></script>
+	<script src="js/lib/three.min.js"></script>
+	<script src="js/lib/stats.min.js"></script>
+	<script src="js/lib/AntiMeshControls.js"></script>
+	<script src="js/lib/DeviceOrientationControls.js"></script>
+	<script src="js/lib/Device.class.js"></script>
+	<script src="js/lib/preloadjs-0.6.2.min.js"></script>
+	<script src="js/lib/soundjs-0.6.2.min.js"></script>
+	<script src="js/Walk.class.js"></script>
+	
+	<script>
+var game;
+$(function(){
+	allHide();
+	$("#loading").show();
+	
+	Walk.Preload.init();
+	Walk.Preload.load(pregress, complete);
+});
+function pregress(e){
+	var per = Math.floor(e.loaded * 10000) /100;
+	$("#loading").text(per + "%");
+}
+function complete(e){
+	allHide();
+	loginShow();
+}
+function loginShow(){
+	allHide();
+	$("#login").show();
+	$(".geometry li").on("click", function(e){
+		if(e.target.tagName !== "INPUT"){
+			$(this).find(":radio").click();
+		}
+	});
+	$("#userLoginForm").on("submit", function(e){
+		var files = $(":file[name='head']")[0].files;
+		if(files.length == 0){
+			gameShow($(":text[name='name']").val(), $(":radio[name='geometry']:checked").val());
+			return false;
+		}
+		var reader = new FileReader();
+		reader.onload = function(e){
+			var img =  new Image();
+			img.src = e.target.result;
+			gameShow($(":text[name='name']").val(), $(":radio[name='geometry']:checked").val(), img);
+		}
+		reader.readAsDataURL(files[0]);
+		return false;
+	});
+}
+function gameShow(name, geometry, image){
+	allHide();
+	game = new Walk.main($("#game")[0]);
+	game.start(name, geometry, image);
+	$("#chat form").on("submit", function(){
+		game.talk($("#chat :text[name='chat']").val());
+		$("#chat :text[name='chat']").val("");
+		return false;
+	});
+}
+function allHide(){
+	$("#loading").hide();
+	$("#login").hide();
+	$("#container").hide();
+}
+	</script>
+</head>
+ 
+<body>
+<div id="loading"></div>
+<div id="login">
+	<form id="userLoginForm">
+		<p>
+			<ul class="geometry">
+				<li><input type="radio" name="geometry" value="0" id="box" checked />立方体</li>
+				<li><input type="radio" name="geometry" value="1" id="cone" />锥体</li>
+				<li><input type="radio" name="geometry" value="2" id="cylinder" />圆柱体</li>
+				<li><input type="radio" name="geometry" value="3" id="octahedron" />八面体</li>
+				<li><input type="radio" name="geometry" value="4" id="sphere" />球体</li>
+			</ul>
+		</p>
+		<p>上传头像<input type="file" name="head" accept="image/*" /></p>
+		<p>姓名<input type="text" name="name" value="游客" /></p>
+		<p><input type="submit" value="提交" /></p>
+	</form>
+</div>
+<div id="game"></div>
+<div id="chat">
+	<form>
+		<p><input name="chat" type="text" /> <input type="submit" /></p>
+	</form>
+</div>
+
+<div id="popup"></div>
+
+</body>
+ 
+</html>
