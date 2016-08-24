@@ -1,0 +1,15 @@
+@charset "utf-8";
+body,div,p,ul,ol,dl,dt,dd,li,form,input,table,th,td,img,h1,h2,h3,h4,h5,h6 { margin: 0;padding: 0;}
+body { font-size: 12px; font-style: normal; font-family:'Microsoft Yahei','微软雅黑','Simsun','宋体','Arial', 'sans-serif';}
+
+
+
+.drawCanvas { }
+
+/*图片上传*/
+.controller input{ width: 200px; height: 100px; font-size: 28pt}
+
+.pop {position:absolute; left:0px; top:0px; background: #000;display:none }
+.pop .message {margin: 10px 20px 0, 0; width:500px; height:520px; background: #fff url('../images/popbg.gif') no-repeat left top;}
+
+.hidebox{ display:none}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>拼图</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="js/jquery-2.2.1.min.js"></script>
+<script src="js/easeljs-0.8.2.min.js"></script>
+<script src="js/preloadjs-0.6.2.min.js"></script>
+<script src="js/tweenjs-0.6.2.min.js"></script>
+<script src="js/Jigsaw.class.js"></script>
+</head>
+
+<body>
+	<div id="loading">
+		loading...
+	</div>
+	<div>
+		<canvas class="drawCanvas" id="jigsaw" width="900" height="700"></canvas>
+	</div>
+	<div class="pop"><div class="message"></div></div>
+<script>
+var game;
+$(function(){
+	Jigsaw.Preload.init();
+	Jigsaw.Preload.load(progress, complete);
+});
+function progress(e){
+	var per = Math.floor(e.loaded * 10000) /100;
+	document.getElementById("loading").innerHTML = per + "%";
+}
+function complete(e){
+	document.body.removeChild(document.getElementById("loading"));
+	jigsawInit();
+}
+function jigsawInit(){
+	game = new Jigsaw.main("jigsaw");
+	game.on(Jigsaw.Event.START, function(e){console.log(e)});
+	game.on(Jigsaw.Event.BINGO, function(e){console.log(e)});
+	game.start(Jigsaw.Preload.getResult("game"));
+}
+
+</script>
+
+</body>
+</html>
